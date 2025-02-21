@@ -44,6 +44,7 @@ max_tokens=2096,
 temperature=0.5,
 model_id='Qwen/Qwen2.5-Coder-32B-Instruct',# it is possible that this model may be overloaded
 custom_role_conversions=None,
+hf_token=os.getenv("HF_API_TOKEN")
 )
 model.last_input_token_count = 0
 
