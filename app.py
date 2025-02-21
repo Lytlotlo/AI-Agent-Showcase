@@ -52,7 +52,7 @@ def get_ai_safety_updates(category: str = "general", max_results: int = 5) -> st
         return "Error: NEWS_API_KEY is not set in your environment."
 
     # Prepare the query; you can customize it further as needed
-    query = f"AI safety {category}"
+    query = f" Latest AI safety research news {category}"
     
     # News API endpoint
     url = "https://newsapi.org/v2/everything"
