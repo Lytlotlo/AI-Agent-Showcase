@@ -4,6 +4,7 @@ import requests
 import pytz
 import yaml
 from tools.final_answer import FinalAnswerTool
+import os
 
 from Gradio_UI import GradioUI
 
@@ -45,6 +46,11 @@ def get_ai_safety_updates(category: str = "general", max_results: int = 5) -> st
     Returns:
         A string summarizing the latest AI safety news updates for the specified category.
     """
+
+    api_key = os.getenv("NEWS_API_KEY")
+    if not api_key:
+        return "Error: NEWS_API_KEY is not set in your environment."
+
     # Prepare the query; you can customize it further as needed
     query = f"AI safety {category}"
     
