@@ -33,6 +33,49 @@ def get_current_time_in_timezone(timezone: str) -> str:
     except Exception as e:
         return f"Error fetching time for timezone '{timezone}': {str(e)}"
 
+@tool
+def get_ai_safety_updates(category: str = "general", max_results: int = 5) -> str:
+    """
+    A tool that fetches the latest news updates on AI safety developments and categorizes them.
+    
+    Args:
+        category: The topic or category for the news updates (e.g., 'research', 'policy', 'industry').
+        max_results: The maximum number of news articles to retrieve.
+    
+    Returns:
+        A string summarizing the latest AI safety news updates for the specified category.
+    """
+    # Prepare the query; you can customize it further as needed
+    query = f"AI safety {category}"
+    
+    # News API endpoint
+    url = "https://newsapi.org/v2/everything"
+    
+    params = {
+        "q": query,
+        "sortBy": "publishedAt",
+        "pageSize": max_results,
+        "apiKey": api_key
+    }
+    
+    response = requests.get(url, params=params)
+    
+    if response.status_code == 200:
+        articles = response.json().get("articles", [])
+        if not articles:
+            return f"No recent updates found for category '{category}'."
+        
+        # Build a summary of the news articles
+        summary = f"Latest AI safety updates for category '{category}':\n"
+        for article in articles:
+            title = article.get("title", "No title")
+            source = article.get("source", {}).get("name", "Unknown source")
+            published = article.get("publishedAt", "No date")
+            summary += f"- {title} (Source: {source}, Date: {published})\n"
+        return summary
+    else:
+        return f"Error fetching news: {response.status_code} - {response.text}"
+
 
 final_answer = FinalAnswerTool()
 
