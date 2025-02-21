@@ -45,6 +45,7 @@ temperature=0.5,
 model_id='Qwen/Qwen2.5-Coder-32B-Instruct',# it is possible that this model may be overloaded
 custom_role_conversions=None,
 )
+model.last_input_token_count = 0
 
 
 # Import tool from Hub
